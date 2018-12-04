@@ -5,9 +5,9 @@
 
   <form action="#" target="dummyframe" id="form">
     <div class="container">
-      <label for="uname"><b>Username</b></label>
-      <script src="one-time.js"></script>
-      <script src="paho-mqtt.js"></script>
+      <script src="../../common.js"></script>
+      <script src="../../one-time.js"></script>
+      <script src="../../paho-mqtt.js"></script>
       <script>
         function onUserChange() {
           updateSite();
@@ -24,37 +24,42 @@
             username.value = url.searchParams.get("site");
         }
 
+        var client = null;
+
         function processForm() {
           var url_string = window.location;
           var url = new URL(url_string);
           var subject = url.searchParams.get("subj");
           var passwordInput = document.getElementById("password")
           var password = passwordInput.value;
-          var client = new Paho.Client('broker.mqttdashboard.com', 8000, randomString(100));
+          
+          getJSON('../../connection.json', function(err, config) {
+            console.log(config);
+            client = new Paho.Client(config.host, Number(config.port), randomString(100));
 
-          function sendMessage(topic, payload, qos, retain) {
-            var message = new Paho.Message(payload);
-            message.destinationName = topic;
-            message.qos = qos;
-            message.retained = retain;
-            client.send(message);
-          }
-
-          client.connect({
-            timeout: 3,
-            keepAliveInterval: 60,
-            cleanSession: true,
-            useSSL: false,
-            onSuccess: async function () { 
-              var key = window.location.hash.substring(1);
-              console.log(password, key);
-              var payload = await aesGcmEncrypt(password, key);
-              console.log(payload);
-              sendMessage(subject, payload, 2, false); 
-            },
-            onFailure: function(m) { reportError(m.errorMessage); }
+            client.connect({
+              timeout: 3,
+              keepAliveInterval: 60,
+              cleanSession: true,
+              useSSL: Boolean(config.secure),
+              onSuccess: async function () { 
+                var key = window.location.hash.substring(1);
+                var payload = await aesGcmEncrypt(password, key);
+                sendMessage(subject, payload, 2, false); 
+              },
+              onFailure: function(m) { reportError(m.errorMessage); }
+            });
           });
+
           return false;
+        }
+
+        function sendMessage(topic, payload, qos, retain) {
+          var message = new Paho.Message(payload);
+          message.destinationName = topic;
+          message.qos = qos;
+          message.retained = retain;
+          client.send(message);
         }
 
         document.addEventListener("DOMContentLoaded", updateSite);
@@ -62,14 +67,15 @@
         form.addEventListener("submit", processForm);
 
       </script>
-      <input id="username" type="text" placeholder="Enter Username" name="uname" value="" autocomplete="username"
+      <label for="uname"><b>Site Name</b></label>
+      <input id="username" type="text" placeholder="Site Name" name="uname" value="" autocomplete="username"
         onchange="onUserChange()" readonly required>
 
       <label for="psw"><b>Password</b></label>
       <input id="password" type="password" placeholder="Enter Password" name="psw" autocomplete="current-password"
         required>
 
-      <button type="submit">Login</button>
+      <button type="submit">Send</button>
     </div>
   </form>
   <style>
