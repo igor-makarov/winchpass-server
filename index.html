@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" />
+<body>
+  <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+
+  <form action="#" target="dummyframe" id="form">
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <script src="one-time.js"></script>
+      <script src="paho-mqtt.js"></script>
+      <script>
+        function onUserChange() {
+          updateSite();
+        }
+
+        function reportError(error) {
+          console.log(error);
+        }
+
+        function updateSite() {
+            var url_string = window.location;
+            var url = new URL(url_string);
+            var username = document.getElementById("username");
+            username.value = url.searchParams.get("site");
+        }
+
+        function processForm() {
+          var url_string = window.location;
+          var url = new URL(url_string);
+          var subject = url.searchParams.get("subj");
+          var passwordInput = document.getElementById("password")
+          var password = passwordInput.value;
+          var client = new Paho.Client('broker.mqttdashboard.com', 8000, randomString(100));
+
+          function sendMessage(topic, payload, qos, retain) {
+            var message = new Paho.Message(payload);
+            message.destinationName = topic;
+            message.qos = qos;
+            message.retained = retain;
+            client.send(message);
+          }
+
+          client.connect({
+            timeout: 3,
+            keepAliveInterval: 60,
+            cleanSession: true,
+            useSSL: false,
+            onSuccess: async function () { 
+              var key = window.location.hash.substring(1);
+              console.log(password, key);
+              var payload = await aesGcmEncrypt(password, key);
+              console.log(payload);
+              sendMessage(subject, payload, 2, false); 
+            },
+            onFailure: function(m) { reportError(m.errorMessage); }
+          });
+          return false;
+        }
+
+        document.addEventListener("DOMContentLoaded", updateSite);
+        var form = document.getElementById("form");
+        form.addEventListener("submit", processForm);
+
+      </script>
+      <input id="username" type="text" placeholder="Enter Username" name="uname" value="" autocomplete="username"
+        onchange="onUserChange()" readonly required>
+
+      <label for="psw"><b>Password</b></label>
+      <input id="password" type="password" placeholder="Enter Password" name="psw" autocomplete="current-password"
+        required>
+
+      <button type="submit">Login</button>
+    </div>
+  </form>
+  <style>
+    /* Bordered form */
+    form {
+      border: 3px solid #f1f1f1;
+    }
+
+    /* Full-width inputs */
+    input[type=text],
+    input[type=password] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    /* Set a style for all buttons */
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    /* Add a hover effect for buttons */
+    button:hover {
+      opacity: 0.8;
+    }
+
+    /* Extra style for the cancel button (red) */
+    .cancelbtn {
+      width: auto;
+      padding: 10px 18px;
+      background-color: #f44336;
+    }
+
+    /* Center the avatar image inside this container */
+    .imgcontainer {
+      text-align: center;
+      margin: 24px 0 12px 0;
+    }
+
+    /* Avatar image */
+    img.avatar {
+      width: 40%;
+      border-radius: 50%;
+    }
+
+    /* Add padding to containers */
+    .container {
+      padding: 16px;
+    }
+
+    /* The "Forgot password" text */
+    span.psw {
+      float: right;
+      padding-top: 16px;
+    }
+
+    /* Change styles for span and cancel button on extra small screens */
+    @media screen and (max-width: 300px) {
+      span.psw {
+        display: block;
+        float: none;
+      }
+
+      .cancelbtn {
+        width: 100%;
+      }
+    }
+
+  </style>
