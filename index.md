@@ -6,11 +6,17 @@ layout: default
 title: WinchPass
 ---
 
-## Bridge your iCloud Keychain to Windows.
+# Bridge your iCloud Keychain to Windows.
 
-This extension is intended for users of iCloud Keychain that have a Windows PC.  
+### Use your iPhone to fill out passwords on your PC.  
+
+WinchPass is a Chrome extension intended for users of iCloud Keychain that have a Windows PC.  
 It fills out passwords automatically and doesn't keep any data.  
 It uses one-time pad encryption and QR codes to link your phone to Chrome.  
 Once the password is filled, the encryption key is discarded and cannot be reused.
 
-Download from <a href="https://chrome.google.com/webstore/detail/kalncabcefgchiphkgoiiglapkoopeal" target="_blank">Chrome Web Store</a>.
+### Download from <a href="https://chrome.google.com/webstore/detail/kalncabcefgchiphkgoiiglapkoopeal" target="_blank">Chrome Web Store</a>.
+
+<div style="text-align:center; padding-top: 20pt;">
+<img src="images/screenshot.png" alt="Screenshot" width="70%"/>
+</div>
