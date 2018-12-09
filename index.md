@@ -1,1 +1,1 @@
-# WinchPass - The iCloud Keychain Brige for Windows!
+# WinchPass - The iCloud Keychain Bridge for Windows!
