@@ -3,10 +3,10 @@
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
 layout: default
-title: WinchPass
+title: WinchPass \| Bridge your iCloud Keychain to Windows.
 ---
 
-# Bridge your iCloud Keychain to Windows.
+# WinchPass.<br> Bridge your iCloud Keychain to Windows.
 
 ### Use your iPhone to fill out passwords on your PC.  
 

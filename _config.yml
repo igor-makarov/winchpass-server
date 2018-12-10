@@ -13,12 +13,14 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: WinchPass
+title: ""
+name: WinchPass
 email: contact@winchpass.com
-# description: >- # this means to ignore newlines until "baseurl:"
-#   Write an awesome description for your new site here. You can edit this
-#   line in _config.yml. It will appear in your document head meta (for
-#   Google search results) and in your feed.xml site description.
+description: >- 
+  WinchPass is a Chrome extension intended for users of iCloud Keychain that have a Windows PC.  
+  It fills out passwords automatically and doesn't keep any data.  
+  It uses one-time pad encryption and QR codes to link your phone to Chrome.  
+  Once the password is filled, the encryption key is discarded and cannot be reused.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://winchpass.com" # the base hostname & protocol for your site, e.g. http://example.com
 
@@ -27,6 +29,13 @@ markdown: kramdown
 theme: minima
 plugins:
   - jekyll-seo-tag
+
+webmaster_verifications:
+  google: QYyCOxTA3Q9xlEAG75ixBje4119AzYHWjrzl4__uNis
+  # bing: 1234
+  # alexa: 1234
+  # yandex: 1234
+  # baidu: 1234
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
