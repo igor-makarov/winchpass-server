@@ -28,6 +28,8 @@ GEM
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.25)
+    filewatcher (1.1.1)
+      optimist (~> 3.0)
     forwardable-extended (2.6.0)
     gemoji (3.0.0)
     github-pages (193)
@@ -209,6 +211,7 @@ GEM
       mini_portile2 (~> 2.3.0)
     octokit (4.13.0)
       sawyer (~> 0.8.0, >= 0.5.3)
+    optimist (3.0.0)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
     public_suffix (2.0.5)
@@ -242,10 +245,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  filewatcher
   github-pages
   jekyll-feed (~> 0.6)
   minima (~> 2.0)
-  tzinfo-data
 
 BUNDLED WITH
    1.17.1
