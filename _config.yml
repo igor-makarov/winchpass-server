@@ -29,6 +29,7 @@ markdown: kramdown
 theme: minima
 plugins:
   - jekyll-seo-tag
+  - jekyll-sitemap
 
 webmaster_verifications:
   google: QYyCOxTA3Q9xlEAG75ixBje4119AzYHWjrzl4__uNis
