@@ -1,5 +1,5 @@
 {
-  "host": "test.mosquitto.org",
-  "port": "8081",
+  "host": "iot.eclipse.org",
+  "port": "443",
   "secure": "true"
 }
