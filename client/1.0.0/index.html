@@ -38,6 +38,7 @@
             client = new Paho.Client(config.host, Number(config.port), randomString(100));
 
             client.connect({
+              userName: config.userName,
               timeout: 3,
               keepAliveInterval: 60,
               cleanSession: true,
