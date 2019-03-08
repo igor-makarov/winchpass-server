@@ -1,5 +1,6 @@
 {
-  "host": "iot.eclipse.org",
+  "host": "mqtt.flespi.io",
   "port": "443",
-  "secure": "true"
+  "secure": "true",
+  "userName": "MWxDHWJHMca5kpNoC04rLxPQKh9q3JgDvE70oExYGyTQLv2blWqVi3BSbz628dvt"
 }
